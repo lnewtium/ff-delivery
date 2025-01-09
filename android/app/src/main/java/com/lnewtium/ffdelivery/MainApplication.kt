@@ -1,4 +1,4 @@
-package com.ffdelivery
+package com.lnewtium.ffdelivery
 
 import android.app.Application
 import android.content.res.Configuration

@@ -24,7 +24,8 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="com.ffdelivery"/>
+        <data android:scheme="ffdelivery"/>
+        <data android:scheme="com.lnewtium.ffdelivery"/>
         <data android:scheme="exp+ff-delivery"/>
       </intent-filter>
     </activity>
