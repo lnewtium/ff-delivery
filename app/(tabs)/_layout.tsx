@@ -30,11 +30,11 @@ const TabsLayout = () => {
         }}
       />
       <Tabs.Screen
-        name={"delivery"}
+        name={"cart"}
         options={{
-          title: "Delivery",
+          title: "Cart",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name={"truck"} color={color} />
+            <FontAwesome size={28} name={"shopping-cart"} color={color} />
           ),
         }}
       />

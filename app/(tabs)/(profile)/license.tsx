@@ -4,7 +4,7 @@ import { WhiteBG } from "@/src/components/WhiteBG";
 
 const LicensePage = () => {
   return (
-    <WhiteBG className={"items-center pt-8"}>
+    <WhiteBG className={"items-center p-2 pt-8 gap-4"}>
       <TouchableOpacity
         onPress={() =>
           Linking.openURL("https://www.flaticon.com/free-icons/motorcycle")
@@ -12,6 +12,16 @@ const LicensePage = () => {
       >
         <StyledText>
           Motorcycle icons created by kliwir art - Flaticon
+        </StyledText>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL("https://www.flaticon.com/free-icons/address")
+        }
+      >
+        <StyledText>
+          Address icons created by Vector Valley - Flaticon
         </StyledText>
       </TouchableOpacity>
     </WhiteBG>

@@ -27,8 +27,18 @@ export const theme = createTheme({
       containerStyle: {
         borderRadius: 10,
         backgroundColor: PlatformColor("systemFill"),
-        margin: 15
+        alignSelf: "stretch",
+        margin: 0
       },
     },
+    CardTitle: {
+      style: {
+        fontFamily: "Inter_400Regular",
+        color: PlatformColor("darkText"),
+      }
+    },
+    CardDivider: {
+      color: PlatformColor("darkText") as unknown as string,
+    }
   },
 });

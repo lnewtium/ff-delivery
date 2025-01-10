@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-export const content = ["./app/**/*.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"];
-export const presets = [require("nativewind/preset")];
+
+import preset from "nativewind/preset";
+
+export const content = [
+  "./app/**/*.{js,jsx,ts,tsx}",
+  "./src/**/*.{js,jsx,ts,tsx}",
+];
+export const presets = [preset];
 export const theme = {
   extend: {},
 };
