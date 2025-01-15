@@ -3,14 +3,16 @@ import authReducer from "@/src/reducers/authReducer";
 import { useDispatch } from "react-redux";
 import { profileApi } from "@/src/services/profile";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { productApi } from "@/src/services/product";
 
 export const appStore = configureStore({
   reducer: {
     auth: authReducer,
     [profileApi.reducerPath]: profileApi.reducer,
+    [productApi.reducerPath]: productApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(profileApi.middleware),
+    getDefaultMiddleware().concat(profileApi.middleware, productApi.middleware),
 });
 
 setupListeners(appStore.dispatch);

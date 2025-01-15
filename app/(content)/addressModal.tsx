@@ -1,17 +1,21 @@
-import { PlatformColor } from "react-native";
+import { View } from "react-native";
 import { useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button } from "@rneui/themed";
 import { StyledInput } from "@/src/components/StyledInput";
-import { WhiteBG } from "@/src/components/WhiteBG";
 import { useSelector } from "react-redux";
 import { RootStateType } from "@/src/utils/store";
 import {
   useSetProfileMutation,
   useGetProfileQuery,
 } from "@/src/services/profile";
-import LoadingPage from "@/src/components/LoadingPage";
-import {errorsType, validateAddress, valuesType} from "@/src/utils/addressTools";
+import LoadingPage from "@/src/blocks/LoadingPage";
+import {
+  errorsType,
+  validateAddress,
+  valuesType,
+} from "@/src/utils/addressTools";
+import { COLORS } from "@/src/utils/theme";
 
 const AddressModal = () => {
   const navigation = useNavigation();
@@ -44,7 +48,7 @@ const AddressModal = () => {
           onPress={save}
           disabled={initialValues === values}
           buttonStyle={{ backgroundColor: "transparent" }}
-          titleStyle={{ color: PlatformColor("systemBlue") }}
+          titleStyle={{ color: COLORS.primary }}
           disabledStyle={{ backgroundColor: "transparent" }}
         />
       ),
@@ -53,7 +57,7 @@ const AddressModal = () => {
           title={"Back"}
           onPress={() => navigation.goBack()}
           buttonStyle={{ backgroundColor: "transparent" }}
-          titleStyle={{ color: PlatformColor("systemBlue") }}
+          titleStyle={{ color: COLORS.primary }}
         />
       ),
       title: data?.address ? "Change address" : "Add address",
@@ -61,7 +65,7 @@ const AddressModal = () => {
   }, [navigation, values]);
 
   return (
-    <WhiteBG className={"pt-4"}>
+    <View className={"pt-4"}>
       <StyledInput
         placeholder={"Full Name"}
         errorMessage={errors.full_name}
@@ -92,7 +96,7 @@ const AddressModal = () => {
         value={values.zip || undefined}
         onChangeText={(text) => setValues({ ...values, zip: text })}
       />
-    </WhiteBG>
+    </View>
   );
 };
 

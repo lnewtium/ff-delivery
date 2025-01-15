@@ -1,8 +1,8 @@
 import { Button, Card } from "@rneui/themed";
-import { Alert, Text, Image, PlatformColor, View } from "react-native";
+import { Alert, Text, Image, View } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
-import LoadingPage from "@/src/components/LoadingPage";
+import LoadingPage from "@/src/blocks/LoadingPage";
 import {
   useGetProfileQuery,
   useSetProfileMutation,
@@ -10,11 +10,11 @@ import {
 import { useNavigation } from "expo-router";
 import { useSelector } from "react-redux";
 import { RootStateType } from "@/src/utils/store";
-import { cn } from "@/src/utils/classTools";
+import { COLORS } from "@/src/utils/theme";
 
 const CardText = (props: React.ComponentPropsWithoutRef<typeof Text>) => {
   const { className, ...rest } = props;
-  return <Text className={cn("text-center", className)} {...rest} />;
+  return <Text className={className} {...rest} />;
 };
 
 const DeliveryAddress = () => {
@@ -90,7 +90,7 @@ const DeliveryAddress = () => {
             <Button
               title={"Delete address"}
               buttonStyle={{
-                backgroundColor: PlatformColor("secondaryLabel"),
+                backgroundColor: COLORS.secondaryContainer,
               }}
               containerStyle={{ marginTop: 10 }}
               onPress={deleteHandle}

@@ -13,8 +13,11 @@ import { Provider } from "react-redux";
 import { appStore, useAppDispatch } from "@/src/utils/store";
 import { ThemeProvider } from "@rneui/themed";
 import { theme } from "@/src/utils/theme";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import * as SystemUI from 'expo-system-ui';
 
 SplashScreen.preventAutoHideAsync();
+SystemUI.setBackgroundColorAsync("white");
 
 // Wrap RootLayout to initialize store before running useAppDispatch
 const RootLayoutWrapper = () => {
@@ -62,7 +65,11 @@ const RootLayout = () => {
     return null;
   }
 
-  return <Slot />;
+  return (
+    <SafeAreaProvider>
+      <Slot />
+    </SafeAreaProvider>
+  );
 };
 
 export default RootLayoutWrapper;

@@ -10,22 +10,20 @@ const AuthLayout = () => {
   );
 
   if (authSession) {
-    return <Redirect href={"(tabs)"} />;
+    return <Redirect href={"(content)"} />;
   }
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView className={"flex-1 justify-start m-2"}>
-        <Stack>
-          <Stack.Screen
-            name={"index"}
-            options={{ headerShown: false, title: "" }}
-          />
-          <Stack.Screen name={"signin"} options={{ title: "Sign In" }} />
-          <Stack.Screen name={"signup"} options={{ title: "Sign Up" }} />
-        </Stack>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <SafeAreaView className={"flex-1 justify-start m-2"}>
+      <Stack>
+        <Stack.Screen
+          name={"index"}
+          options={{ headerShown: false, title: "" }}
+        />
+        <Stack.Screen name={"signin"} options={{ title: "Sign In" }} />
+        <Stack.Screen name={"signup"} options={{ title: "Sign Up" }} />
+      </Stack>
+    </SafeAreaView>
   );
 };
 

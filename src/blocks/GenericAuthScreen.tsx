@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StyledInput } from "@/src/components/StyledInput";
 import { Button } from "@rneui/themed";
 import { StyledText } from "@/src/components/StyledText";
-import { WhiteBG } from "@/src/components/WhiteBG";
+import { View } from "react-native";
 
 type propsType = {
   type: "signin" | "signup";
@@ -51,7 +51,7 @@ export const GenericAuthScreen = ({ type, handle }: propsType) => {
   };
 
   return (
-    <WhiteBG className={"flex-1 items-center justify-center gap-4"}>
+    <View className={"flex-1 items-center justify-center gap-2"}>
       <StyledText className={"text-2xl font-bold mb-8"}>
         {type === "signin" ? "Sign In" : "Sign Up"}
       </StyledText>
@@ -88,6 +88,6 @@ export const GenericAuthScreen = ({ type, handle }: propsType) => {
         title={type === "signin" ? "Login" : "Register account"}
         onPress={handleWrapper}
       />
-    </WhiteBG>
+    </View>
   );
 };

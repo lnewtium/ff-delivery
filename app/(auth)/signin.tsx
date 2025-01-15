@@ -1,5 +1,5 @@
 import { supabase } from "@/src/utils/supabase";
-import { GenericAuthScreen } from "@/src/components/GenericAuthScreen";
+import { GenericAuthScreen } from "@/src/blocks/GenericAuthScreen";
 
 const SignInPage =() => {
   const signIn = async (email: string, password: string) => {

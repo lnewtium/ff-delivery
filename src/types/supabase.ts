@@ -34,6 +34,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      products: {
+        Row: {
+          desc: string
+          id: number
+          img: string
+          price: number
+          special_offer: boolean
+          text: string
+          top_selling: boolean
+        }
+        Insert: {
+          desc: string
+          id?: number
+          img: string
+          price: number
+          special_offer: boolean
+          text: string
+          top_selling: boolean
+        }
+        Update: {
+          desc?: string
+          id?: number
+          img?: string
+          price?: number
+          special_offer?: boolean
+          text?: string
+          top_selling?: boolean
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           address: string | null

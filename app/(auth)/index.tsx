@@ -1,14 +1,14 @@
-import { Image, PlatformColor } from "react-native";
+import { Image, View } from "react-native";
 import React from "react";
 import { Button } from "@rneui/themed";
 import { useNavigation } from "expo-router";
-import { WhiteBG } from "@/src/components/WhiteBG";
+import {COLORS} from "@/src/utils/theme";
 
 const AuthPage = () => {
   const navigation = useNavigation();
 
   return (
-    <WhiteBG className={"flex-1 justify-center items-center gap-4"}>
+    <View className={"flex-1 justify-center items-center gap-4"}>
       <Image
         className={"size-40 rounded-full mb-8"}
         source={require("@/assets/logo.png")}
@@ -24,14 +24,14 @@ const AuthPage = () => {
       <Button
         title={"Don't have an account?"}
         containerStyle={{ minWidth: 300 }}
-        buttonStyle={{ backgroundColor: PlatformColor("systemFill") }}
-        titleStyle={{ color: PlatformColor("darkText") }}
+        buttonStyle={{ backgroundColor: COLORS.container }}
+        titleStyle={{ color: COLORS.text }}
         onPress={() => {
           // @ts-ignore
           navigation.navigate("signup");
         }}
       />
-    </WhiteBG>
+    </View>
   );
 };
 

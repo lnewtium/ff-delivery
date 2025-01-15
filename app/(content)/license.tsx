@@ -1,10 +1,9 @@
-import { Linking, TouchableOpacity } from "react-native";
+import {Linking, TouchableOpacity, View} from "react-native";
 import { StyledText } from "@/src/components/StyledText";
-import { WhiteBG } from "@/src/components/WhiteBG";
 
 const LicensePage = () => {
   return (
-    <WhiteBG className={"items-center p-2 pt-8 gap-4"}>
+    <View className={"items-center p-2 pt-8 gap-4"}>
       <TouchableOpacity
         onPress={() =>
           Linking.openURL("https://www.flaticon.com/free-icons/motorcycle")
@@ -24,7 +23,16 @@ const LicensePage = () => {
           Address icons created by Vector Valley - Flaticon
         </StyledText>
       </TouchableOpacity>
-    </WhiteBG>
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL("https://www.flaticon.com/free-icons/user")
+        }
+      >
+        <StyledText>
+          User icons created by Freepik - Flaticon
+        </StyledText>
+      </TouchableOpacity>
+    </View>
   );
 };
 

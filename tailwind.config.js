@@ -8,6 +8,10 @@ export const content = [
 ];
 export const presets = [preset];
 export const theme = {
-  extend: {},
+  extend: {
+    borderRadius: {
+      'def': '10px',
+    }
+  }
 };
 export const plugins = [];
