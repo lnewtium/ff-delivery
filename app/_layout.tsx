@@ -14,7 +14,8 @@ import { appStore, useAppDispatch } from "@/src/utils/store";
 import { ThemeProvider } from "@rneui/themed";
 import { theme } from "@/src/utils/theme";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import * as SystemUI from 'expo-system-ui';
+import * as SystemUI from "expo-system-ui";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
 SystemUI.setBackgroundColorAsync("white");
@@ -24,7 +25,9 @@ const RootLayoutWrapper = () => {
   return (
     <Provider store={appStore}>
       <ThemeProvider theme={theme}>
-        <RootLayout />
+        <GestureHandlerRootView>
+          <RootLayout />
+        </GestureHandlerRootView>
         <StatusBar style={"dark"} />
       </ThemeProvider>
     </Provider>
@@ -47,9 +50,10 @@ const RootLayout = () => {
   }, [fontsLoaded, fontsError, loadSession]);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
       setLoadSession(false);
-      dispatch(setSession(session)); // Work if user is already signed in
+      if (error) dispatch(setSession(null));
+      else dispatch(setSession(session)); // Work if user is already signed in
     });
     supabase.auth.onAuthStateChange((_, session) => {
       dispatch(setSession(session)); // Sync react and supabase auth changes

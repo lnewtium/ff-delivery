@@ -1,5 +1,5 @@
-import React, {PropsWithChildren} from "react";
-import {ScrollView} from "react-native";
+import React, { PropsWithChildren } from "react";
+import { ScrollView } from "react-native";
 
 const HorizontalScroll = ({ children }: PropsWithChildren) => {
   return (
@@ -15,4 +15,4 @@ const HorizontalScroll = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default HorizontalScroll
+export default HorizontalScroll;

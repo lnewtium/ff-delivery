@@ -1,18 +1,19 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView, Text } from "react-native";
 import { useGetProductsQuery } from "@/src/services/product";
 import LoadingPage from "@/src/blocks/LoadingPage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProductCard from "@/src/blocks/cards/ProductCard";
-import { Tables } from "@/src/types/supabase";
 import HorizontalScroll from "@/src/components/HorizontalScroll";
 import Header from "@/src/blocks/Header";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {ViewCart} from "@/src/blocks/ViewCart";
 
 const ProductCarousel = ({
   products,
   title,
 }: {
-  products?: Tables<"products">[];
+  products?: { id: number; img: string; text: string; price: number }[];
   title: string;
 }) => {
   return (
@@ -32,6 +33,7 @@ const ProductCarousel = ({
 
 const HomePage = () => {
   const { data, isFetching } = useGetProductsQuery({});
+  const insets = useSafeAreaInsets();
 
   if (isFetching) return <LoadingPage />;
 
@@ -46,9 +48,10 @@ const HomePage = () => {
   );
 
   return (
-    <SafeAreaView className={"py-2"} edges={["top"]}>
+    <SafeAreaView edges={["top"]}>
       <ScrollView
-        contentContainerStyle={{gap: 8}}
+        contentContainerStyle={{ gap: 8, paddingBottom: insets.bottom }}
+        showsVerticalScrollIndicator={false}
         stickyHeaderIndices={[0]}
         stickyHeaderHiddenOnScroll={true}
       >
@@ -63,17 +66,7 @@ const HomePage = () => {
         {/* Other products */}
         <ProductCarousel products={commonOffers} title={"Other products"} />
       </ScrollView>
-      {/* Prevent system navigation button overlapping */}
-      <View
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: "#ffffff01", // Hacky way to render empty view with transparent background
-          height: 35,
-        }}
-      />
+      <ViewCart/>
     </SafeAreaView>
   );
 };

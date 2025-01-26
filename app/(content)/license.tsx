@@ -1,4 +1,4 @@
-import {Linking, TouchableOpacity, View} from "react-native";
+import { Linking, TouchableOpacity, View } from "react-native";
 import { StyledText } from "@/src/components/StyledText";
 
 const LicensePage = () => {
@@ -28,9 +28,30 @@ const LicensePage = () => {
           Linking.openURL("https://www.flaticon.com/free-icons/user")
         }
       >
+        <StyledText>User icons created by Freepik - Flaticon</StyledText>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL("https://www.flaticon.com/free-icons/add-to-cart")
+        }
+      >
         <StyledText>
-          User icons created by Freepik - Flaticon
+          Add to cart icons created by Edi Prast - Flaticon
         </StyledText>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL("https://www.flaticon.com/free-icons/list")
+        }
+      >
+        <StyledText>List icons created by Freepik - Flaticon</StyledText>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL("https://freeicons.io/bakery-icon-set-32829/book-cook-cookbook-cooking-recipe-icon-1250224")
+        }
+      >
+        <StyledText>Icon by Pexelpy on freeicons.io</StyledText>
       </TouchableOpacity>
     </View>
   );

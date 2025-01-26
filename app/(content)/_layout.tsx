@@ -16,7 +16,10 @@ const TabsLayout = () => {
         contentStyle: { backgroundColor: "#FFF" },
       }}
     >
-      <Stack.Screen name={"index"}  options={{title: "", headerShown: false}}/>
+      <Stack.Screen
+        name={"index"}
+        options={{ title: "", headerShown: false }}
+      />
       <Stack.Screen name={"profile"} options={{ title: "Profile" }} />
       <Stack.Screen
         name="addressModal"
@@ -24,10 +27,17 @@ const TabsLayout = () => {
           presentation: "fullScreenModal",
         }}
       />
-      <Stack.Screen name={"product/[id]"} options={{
-        presentation: "transparentModal",
-        headerShown: false
-      }}/>
+      <Stack.Screen
+        name={"product/[id]"}
+        options={{
+          presentation: "containedModal",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name={"cart"}
+        options={{ presentation: "containedModal", headerShown: false }}
+      />
       <Stack.Screen name={"license"} options={{ title: "License" }} />
     </Stack>
   );

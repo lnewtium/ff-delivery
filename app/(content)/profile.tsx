@@ -12,7 +12,7 @@ const ProfilePage = () => {
   return (
     <SafeAreaView edges={["bottom"]}>
       <ScrollView
-        contentContainerClassName={"items-center gap-5 p-1"}
+        contentContainerClassName={"items-center gap-5 p-2 h-full"}
         showsVerticalScrollIndicator={false}
       >
         <CurrentDeliveries />

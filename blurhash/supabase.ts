@@ -36,6 +36,7 @@ export type Database = {
     Tables: {
       products: {
         Row: {
+          blurhash: string
           desc: string
           id: number
           img: string
@@ -45,6 +46,7 @@ export type Database = {
           top_selling: boolean
         }
         Insert: {
+          blurhash: string
           desc: string
           id?: number
           img: string
@@ -54,6 +56,7 @@ export type Database = {
           top_selling: boolean
         }
         Update: {
+          blurhash?: string
           desc?: string
           id?: number
           img?: string
@@ -67,6 +70,7 @@ export type Database = {
       profiles: {
         Row: {
           address: string | null
+          avatar_url: string | null
           city: string | null
           full_name: string | null
           id: string
@@ -77,6 +81,7 @@ export type Database = {
         }
         Insert: {
           address?: string | null
+          avatar_url?: string | null
           city?: string | null
           full_name?: string | null
           id: string
@@ -87,6 +92,7 @@ export type Database = {
         }
         Update: {
           address?: string | null
+          avatar_url?: string | null
           city?: string | null
           full_name?: string | null
           id?: string

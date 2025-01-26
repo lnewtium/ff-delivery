@@ -2,7 +2,7 @@ import { Image, View } from "react-native";
 import React from "react";
 import { Button } from "@rneui/themed";
 import { useNavigation } from "expo-router";
-import {COLORS} from "@/src/utils/theme";
+import { COLORS } from "@/src/utils/theme";
 
 const AuthPage = () => {
   const navigation = useNavigation();
@@ -24,7 +24,7 @@ const AuthPage = () => {
       <Button
         title={"Don't have an account?"}
         containerStyle={{ minWidth: 300 }}
-        buttonStyle={{ backgroundColor: COLORS.container }}
+        buttonStyle={{ backgroundColor: "#BABABA" }}
         titleStyle={{ color: COLORS.text }}
         onPress={() => {
           // @ts-ignore
