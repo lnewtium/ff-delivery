@@ -8,9 +8,8 @@ import {
   useSetProfileMutation,
 } from "@/src/services/profile";
 import { useNavigation } from "expo-router";
-import { useSelector } from "react-redux";
-import { RootStateType } from "@/src/utils/store";
 import { COLORS } from "@/src/utils/theme";
+import { useAppSelector } from "@/src/utils/reactTools";
 
 const CardText = (props: React.ComponentPropsWithoutRef<typeof Text>) => {
   const { className, ...rest } = props;
@@ -19,7 +18,7 @@ const CardText = (props: React.ComponentPropsWithoutRef<typeof Text>) => {
 
 const DeliveryAddress = () => {
   const navigation = useNavigation();
-  const session = useSelector((state: RootStateType) => state.auth.authSession);
+  const session = useAppSelector((state) => state.auth.authSession);
   const { data, isFetching } = useGetProfileQuery();
   const [updateProfile] = useSetProfileMutation();
 

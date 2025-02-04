@@ -48,10 +48,19 @@ const LicensePage = () => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() =>
-          Linking.openURL("https://freeicons.io/bakery-icon-set-32829/book-cook-cookbook-cooking-recipe-icon-1250224")
+          Linking.openURL(
+            "https://freeicons.io/bakery-icon-set-32829/book-cook-cookbook-cooking-recipe-icon-1250224",
+          )
         }
       >
         <StyledText>Icon by Pexelpy on freeicons.io</StyledText>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL("https://www.flaticon.com/free-icons/credit-card")
+        }
+      >
+        <StyledText>Credit-card icons created by Freepik - Flaticon</StyledText>
       </TouchableOpacity>
     </View>
   );

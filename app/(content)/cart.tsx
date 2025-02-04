@@ -2,8 +2,6 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
-import { RootStateType } from "@/src/utils/store";
 import {
   StyleSheet,
   Text,
@@ -13,14 +11,18 @@ import {
   Pressable,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
 import { COLORS } from "@/src/utils/theme";
 import { useRouter } from "expo-router";
-import { Card } from "@rneui/themed";
+import { Card, CheckBox } from "@rneui/themed";
 import { getProductUrl } from "@/src/utils/imageTools";
 import { useGetProductByIdQuery } from "@/src/services/product";
 import { getUsd } from "@/src/utils/priceTools";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { useAppSelector } from "@/src/utils/reactTools";
+import Animated, {FadeIn, FadeOut, SlideInDown} from "react-native-reanimated";
+import Entypo from '@expo/vector-icons/Entypo';
+import Feather from '@expo/vector-icons/Feather';
 
 const ProductCardInCart = ({ id, count }: { id: string; count: number }) => {
   const { data } = useGetProductByIdQuery({ id });
@@ -65,9 +67,9 @@ const ProductCardInCart = ({ id, count }: { id: string; count: number }) => {
 const Cart = () => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const cartContent = useSelector(
-    (state: RootStateType) => state.cart.products,
-  );
+  const cartContent = useAppSelector((state) => state.cart.products);
+  const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+  const [uiState, setUiState] = React.useState(0);
 
   return (
     <SafeAreaView className={"p-2 h-full"}>
@@ -89,7 +91,7 @@ const Cart = () => {
         <ProductCardInCart id={item} count={cartContent[item]} key={item} />
       ))}
       <View
-        className={"absolute bottom-0 m-8 left-0 right-0 gap-2"}
+        className={"absolute bottom-0 m-8 left-0 right-0"}
         style={{ marginBottom: insets.bottom + 4 }}
       >
         <View className={"flex-row"}>
@@ -106,11 +108,51 @@ const Cart = () => {
             )}
           </Text>
         </View>
-        <TouchableOpacity
-          className={"self-stretch bg-red-500 p-2 rounded-def items-center"}
+        <AnimatedPressable
+          className={`self-stretch bg-red-500 p-2 rounded-def items-center ${uiState > 0 ? "hidden" : ""}`}
+          exiting={FadeOut.duration(200)}
+          onPress={() => {
+            setUiState(1);
+          }}
         >
           <Text className={"text-2xl"}>Place order</Text>
-        </TouchableOpacity>
+        </AnimatedPressable>
+        {/*<View className={`self-stretch bg-red-500 p-2 rounded-def items-center ${uiState > 0 ? "" : "hidden"}`}>*/}
+        {/*  <Text className={"text-2xl"}>Cancel</Text>*/}
+        {/*</View>*/}
+        <Animated.View
+          className={`self-stretch py-2 items-center flex-row ${uiState === 1 ? "" : "hidden"}`}
+          entering={SlideInDown.delay(100).duration(300)}
+        >
+          <View className="flex-1 flex-row items-center">
+            <CheckBox
+              checkedIcon="dot-circle-o"
+              checked
+              checkedColor={"#000000"}
+              containerStyle={{ padding: 0 }}
+            />
+            <Image
+              source={require("@/assets/credit-card.png")}
+              className="ml-8"
+            />
+          </View>
+          <Text className={"text-2xl"}>**** **** **** 2487</Text>
+        </Animated.View>
+        <Animated.View
+          className={`self-stretch py-2 items-center flex-row ${uiState === 1 ? "" : "hidden"}`}
+          entering={SlideInDown.delay(100).duration(300)}
+        >
+          <Entypo name="plus" size={32} color="black" className="mx-1.5"/>
+          <Feather name="credit-card" size={64} color="black" className="ml-9"/>
+          <Text className={"text-2xl ml-8"}>Add new card</Text>
+        </Animated.View>
+        <Animated.View
+          className={`self-stretch py-2 items-center flex-row ${uiState === 1 ? "" : "hidden"}`}
+          entering={SlideInDown.delay(100).duration(300)}
+        >
+          <Entypo name="location-pin" size={32} color="black" className="mx-1.5"/>
+          <Text className={"text-2xl"}>J. H. ***76</Text>
+        </Animated.View>
       </View>
     </SafeAreaView>
   );

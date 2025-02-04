@@ -10,27 +10,33 @@ import "../global.css";
 import { supabase } from "@/src/utils/supabase";
 import { setSession } from "@/src/reducers/authReducer";
 import { Provider } from "react-redux";
-import { appStore, useAppDispatch } from "@/src/utils/store";
+import { appStore } from "@/src/utils/store";
 import { ThemeProvider } from "@rneui/themed";
 import { theme } from "@/src/utils/theme";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import * as SystemUI from "expo-system-ui";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StripeProvider } from "@stripe/stripe-react-native";
+import { useAppDispatch } from "@/src/utils/reactTools";
 
 SplashScreen.preventAutoHideAsync();
 SystemUI.setBackgroundColorAsync("white");
+// @ts-ignore
+const publishableKey = process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;
 
 // Wrap RootLayout to initialize store before running useAppDispatch
 const RootLayoutWrapper = () => {
   return (
-    <Provider store={appStore}>
-      <ThemeProvider theme={theme}>
-        <GestureHandlerRootView>
-          <RootLayout />
-        </GestureHandlerRootView>
-        <StatusBar style={"dark"} />
-      </ThemeProvider>
-    </Provider>
+    <StripeProvider publishableKey={publishableKey} urlScheme={"ffdelivery"}>
+      <Provider store={appStore}>
+        <ThemeProvider theme={theme}>
+          <GestureHandlerRootView>
+            <RootLayout />
+          </GestureHandlerRootView>
+          <StatusBar style={"dark"} />
+        </ThemeProvider>
+      </Provider>
+    </StripeProvider>
   );
 };
 

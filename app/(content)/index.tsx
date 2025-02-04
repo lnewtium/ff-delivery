@@ -50,7 +50,7 @@ const HomePage = () => {
   return (
     <SafeAreaView edges={["top"]}>
       <ScrollView
-        contentContainerStyle={{ gap: 8, paddingBottom: insets.bottom }}
+        contentContainerStyle={{ gap: 8, paddingBottom: insets.bottom + 80 }}
         showsVerticalScrollIndicator={false}
         stickyHeaderIndices={[0]}
         stickyHeaderHiddenOnScroll={true}

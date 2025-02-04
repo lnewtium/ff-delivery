@@ -3,8 +3,6 @@ import { useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button } from "@rneui/themed";
 import { StyledInput } from "@/src/components/StyledInput";
-import { useSelector } from "react-redux";
-import { RootStateType } from "@/src/utils/store";
 import {
   useSetProfileMutation,
   useGetProfileQuery,
@@ -16,10 +14,11 @@ import {
   valuesType,
 } from "@/src/utils/addressTools";
 import { COLORS } from "@/src/utils/theme";
+import { useAppSelector } from "@/src/utils/reactTools";
 
 const AddressModal = () => {
   const navigation = useNavigation();
-  const session = useSelector((state: RootStateType) => state.auth.authSession);
+  const session = useAppSelector((state) => state.auth.authSession);
   const { data, isLoading } = useGetProfileQuery();
   const [updateProfile] = useSetProfileMutation();
 

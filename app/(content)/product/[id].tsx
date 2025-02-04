@@ -30,7 +30,7 @@ const ProductModal = () => {
       <Animated.ScrollView
         showsVerticalScrollIndicator={false}
         className={"h-full"}
-        contentContainerStyle={{ gap: 16, alignItems: "center", paddingBottom: insets.bottom }}
+        contentContainerStyle={{ gap: 16, alignItems: "center", paddingBottom: insets.bottom + 80 }}
         onScroll={scrollEvent}
       >
         <DynamicHeader product={data!} val={scrollOffset} />

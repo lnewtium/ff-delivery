@@ -1,7 +1,6 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { supabase } from "@/src/utils/supabase";
-import { useSelector } from "react-redux";
-import { RootStateType } from "@/src/utils/store";
+import { useAppSelector } from "@/src/utils/reactTools";
 
 export const profileApi = createApi({
   reducerPath: "profileApi",
@@ -49,7 +48,7 @@ export const profileApi = createApi({
 });
 
 export const useGetProfileQuery = () => {
-  const session = useSelector((state: RootStateType) => state.auth.authSession);
+  const session = useAppSelector((state) => state.auth.authSession);
   return profileApi.useGetProfileQuery({ id: session!.user.id });
 };
 

@@ -21,7 +21,7 @@ export const Nutrition = () => {
           <PointedText text={"Proteins: 10g"} />
           <PointedText text={"Carbohydrates: 30g"} />
           <PointedText text={"Fiber: 2g"} sub={true}/>
-          <PointedText text={"Energy: ~285 kcal"} />
+          <PointedText text={"Energy: 285 kcal"} />
         </View>
       </View>
     </Card>

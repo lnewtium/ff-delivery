@@ -1,12 +1,9 @@
 import { Redirect, Stack } from "expo-router";
-import { useSelector } from "react-redux";
-import { RootStateType } from "@/src/utils/store";
 import React from "react";
+import { useAppSelector } from "@/src/utils/reactTools";
 
 const TabsLayout = () => {
-  const authSession = useSelector(
-    (state: RootStateType) => state.auth.authSession,
-  );
+  const authSession = useAppSelector((state) => state.auth.authSession);
 
   if (!authSession) return <Redirect href={"(auth)"} />;
 
