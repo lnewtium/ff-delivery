@@ -36,7 +36,7 @@ const ProductModal = () => {
         <DynamicHeader product={data!} val={scrollOffset} />
         <Text className={"text-lg mx-2"}>{data!.desc}</Text>
         <AddToCart data={data!} />
-        <Nutrition />
+        <Nutrition id={id}/>
         <FoodComposition />
       </Animated.ScrollView>
       <ViewCart/>

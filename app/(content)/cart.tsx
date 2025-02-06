@@ -15,17 +15,27 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
 import { COLORS } from "@/src/utils/theme";
 import { useRouter } from "expo-router";
-import { Card, CheckBox } from "@rneui/themed";
+import { Button, Card, CheckBox } from "@rneui/themed";
 import { getProductUrl } from "@/src/utils/imageTools";
 import { useGetProductByIdQuery } from "@/src/services/product";
 import { getUsd } from "@/src/utils/priceTools";
-import { useAppSelector } from "@/src/utils/reactTools";
-import Animated, {FadeIn, FadeOut, SlideInDown} from "react-native-reanimated";
-import Entypo from '@expo/vector-icons/Entypo';
-import Feather from '@expo/vector-icons/Feather';
+import { useAppDispatch, useAppSelector } from "@/src/utils/reactTools";
+import Animated, { FadeOut, SlideInDown } from "react-native-reanimated";
+import Entypo from "@expo/vector-icons/Entypo";
+import { clearCart } from "@/src/reducers/cartReducer";
 
-const ProductCardInCart = ({ id, count }: { id: string; count: number }) => {
+const ProductCardInCart = ({
+  id,
+  count,
+  showRemoveButton,
+}: {
+  id: string;
+  count: number;
+  showRemoveButton: boolean;
+}) => {
   const { data } = useGetProductByIdQuery({ id });
+  const AnimatedTouchableOpacity =
+    Animated.createAnimatedComponent(TouchableOpacity);
   return (
     <Card
       containerStyle={{ margin: 8 }}
@@ -49,15 +59,17 @@ const ProductCardInCart = ({ id, count }: { id: string; count: number }) => {
           <Text className={"font-semibold text-2xl"}>
             {getUsd(data!.price * count)}
           </Text>
-
-          <TouchableOpacity
-            onPress={() => {}}
-            className={
-              "rounded-full bg-red-500 size-8 items-center justify-center"
-            }
-          >
-            <AntDesign name="minus" size={20} color="black" />
-          </TouchableOpacity>
+          {showRemoveButton && (
+            <AnimatedTouchableOpacity
+              exiting={FadeOut}
+              onPress={() => {}}
+              className={
+                "rounded-full bg-red-500 size-8 items-center justify-center"
+              }
+            >
+              <AntDesign name="minus" size={20} color="black" />
+            </AnimatedTouchableOpacity>
+          )}
         </View>
       </View>
     </Card>
@@ -68,8 +80,10 @@ const Cart = () => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const cartContent = useAppSelector((state) => state.cart.products);
+  const dispatch = useAppDispatch();
   const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-  const [uiState, setUiState] = React.useState(0);
+  const [uiStage, setUiStage] = React.useState(0);
+  const [stage2loading, setStage2Loading] = React.useState(false);
 
   return (
     <SafeAreaView className={"p-2 h-full"}>
@@ -88,7 +102,12 @@ const Cart = () => {
         <View className={"flex-1"}></View>
       </View>
       {Object.keys(cartContent).map((item) => (
-        <ProductCardInCart id={item} count={cartContent[item]} key={item} />
+        <ProductCardInCart
+          id={item}
+          count={cartContent[item]}
+          key={item}
+          showRemoveButton={uiStage === 0}
+        />
       ))}
       <View
         className={"absolute bottom-0 m-8 left-0 right-0"}
@@ -109,49 +128,83 @@ const Cart = () => {
           </Text>
         </View>
         <AnimatedPressable
-          className={`self-stretch bg-red-500 p-2 rounded-def items-center ${uiState > 0 ? "hidden" : ""}`}
+          className={`self-stretch bg-red-500 p-2 rounded-def items-center ${uiStage > 0 ? "hidden" : ""}`}
           exiting={FadeOut.duration(200)}
           onPress={() => {
-            setUiState(1);
+            setUiStage(1);
           }}
         >
           <Text className={"text-2xl"}>Place order</Text>
         </AnimatedPressable>
-        {/*<View className={`self-stretch bg-red-500 p-2 rounded-def items-center ${uiState > 0 ? "" : "hidden"}`}>*/}
-        {/*  <Text className={"text-2xl"}>Cancel</Text>*/}
-        {/*</View>*/}
         <Animated.View
-          className={`self-stretch py-2 items-center flex-row ${uiState === 1 ? "" : "hidden"}`}
+          className={`self-stretch items-stretch gap-1 ${uiStage >= 1 ? "" : "hidden"}`}
           entering={SlideInDown.delay(100).duration(300)}
         >
-          <View className="flex-1 flex-row items-center">
-            <CheckBox
-              checkedIcon="dot-circle-o"
-              checked
-              checkedColor={"#000000"}
-              containerStyle={{ padding: 0 }}
+          <View className={"items-center flex-row"}>
+            <Entypo
+              name="location-pin"
+              size={32}
+              color="black"
+              className="mx-1.5"
             />
-            <Image
-              source={require("@/assets/credit-card.png")}
-              className="ml-8"
+            <Text className={"text-2xl ml-9"}>J. H. ***76</Text>
+          </View>
+          <View className={"items-center flex-row mt-4"}>
+            <View className="flex-1 flex-row items-center">
+              <CheckBox
+                checkedIcon="dot-circle-o"
+                checked
+                checkedColor={"#000000"}
+                containerStyle={{ padding: 0 }}
+              />
+              <Image
+                source={require("@/assets/credit-card.png")}
+                className="ml-8"
+              />
+            </View>
+            <Text className={"text-2xl"}>**** **** **** 2487</Text>
+          </View>
+          <View className={"items-center flex-row"}>
+            <Entypo name="plus" size={32} color="black" className="mx-1.5" />
+            <Text className={"text-2xl ml-8"}>Add new card</Text>
+          </View>
+          <View className={"items-stretch flex-row gap-2 mt-2"}>
+            <Pressable
+              className={
+                "bg-red-500 p-2 rounded-def items-center justify-center"
+              }
+            >
+              <Ionicons name="caret-back" size={24} color="black" />
+            </Pressable>
+            <Button
+              containerStyle={{
+                backgroundColor: "#ef4444",
+                borderRadius: 10,
+                alignItems: "center",
+                flex: 1,
+              }}
+              title={uiStage === 1 ? "Confirm order" : "Successful"}
+              titleStyle={{ color: "black" }}
+              buttonStyle={{ backgroundColor: "transparent" }}
+              loadingStyle={{
+                // @ts-ignore
+                color: "black",
+              }}
+              loading={stage2loading}
+              onPress={() => {
+                setStage2Loading(true);
+                setTimeout(() => {
+                  setStage2Loading(false);
+                  setUiStage(2);
+                  setTimeout(() => {
+                    dispatch(clearCart());
+                    router.dismissAll();
+                    router.push("profile");
+                  }, 1000);
+                }, 3000);
+              }}
             />
           </View>
-          <Text className={"text-2xl"}>**** **** **** 2487</Text>
-        </Animated.View>
-        <Animated.View
-          className={`self-stretch py-2 items-center flex-row ${uiState === 1 ? "" : "hidden"}`}
-          entering={SlideInDown.delay(100).duration(300)}
-        >
-          <Entypo name="plus" size={32} color="black" className="mx-1.5"/>
-          <Feather name="credit-card" size={64} color="black" className="ml-9"/>
-          <Text className={"text-2xl ml-8"}>Add new card</Text>
-        </Animated.View>
-        <Animated.View
-          className={`self-stretch py-2 items-center flex-row ${uiState === 1 ? "" : "hidden"}`}
-          entering={SlideInDown.delay(100).duration(300)}
-        >
-          <Entypo name="location-pin" size={32} color="black" className="mx-1.5"/>
-          <Text className={"text-2xl"}>J. H. ***76</Text>
         </Animated.View>
       </View>
     </SafeAreaView>

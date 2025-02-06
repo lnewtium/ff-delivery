@@ -17,7 +17,6 @@ const TabsLayout = () => {
         name={"index"}
         options={{ title: "", headerShown: false }}
       />
-      <Stack.Screen name={"profile"} options={{ title: "Profile" }} />
       <Stack.Screen
         name="addressModal"
         options={{
@@ -35,6 +34,7 @@ const TabsLayout = () => {
         name={"cart"}
         options={{ presentation: "containedModal", headerShown: false }}
       />
+      <Stack.Screen name={"profile"} options={{ title: "Profile" }} />
       <Stack.Screen name={"license"} options={{ title: "License" }} />
     </Stack>
   );

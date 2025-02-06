@@ -88,6 +88,7 @@ const DeliveryAddress = () => {
           {data?.address && (
             <Button
               title={"Delete address"}
+              titleStyle={{color: "white"}}
               buttonStyle={{
                 backgroundColor: COLORS.secondaryContainer,
               }}

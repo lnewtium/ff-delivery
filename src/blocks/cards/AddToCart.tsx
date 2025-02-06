@@ -6,6 +6,7 @@ import { addToCart } from "@/src/reducers/cartReducer";
 import { Tables } from "@/supabase/supabase";
 import { getUsd } from "@/src/utils/priceTools";
 import { useAppDispatch, useAppSelector } from "@/src/utils/reactTools";
+import { usePrefetch } from "@/src/services/product";
 
 type propsType = {
   countValue: number;
@@ -16,71 +17,50 @@ type propsType = {
 const AddBlock = ({ countValue, setCountValue, data }: propsType) => {
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart.products);
+  const prefetchProduct = usePrefetch("getProductById");
+  const alreadyInCart: boolean = !!cart[data.id];
+  const activeStateStyle = alreadyInCart
+    ? "bg-green-500 opacity-50"
+    : "bg-red-500";
 
   return (
     <View className={"flex-row items-center justify-between"}>
-      {cart[data!.id] ? (
-        <>
-          <View className={"flex-row items-center gap-4"}>
-            <View
-              className={
-                "rounded-full bg-green-500 opacity-30 size-8 items-center justify-center"
-              }
-            >
-              <AntDesign name="minus" size={20} color="black" />
-            </View>
-            <Text className={"text-2xl color-[#0000004f]"}>{countValue}</Text>
-            <View
-              className={
-                "rounded-full bg-green-500 opacity-30 size-8 items-center justify-center"
-              }
-            >
-              <AntDesign name="plus" size={20} color="black" />
-            </View>
-          </View>
-          <View
-            className={"p-2 bg-green-500 rounded-def flex-row items-center"}
-          >
-            <Text className={"text-xl text-center"}>Already in cart</Text>
-          </View>
-        </>
-      ) : (
-        <>
-          <View className={"flex-row items-center gap-4"}>
-            <TouchableOpacity
-              onPress={() => setCountValue(Math.max(1, countValue - 1))}
-              className={
-                "rounded-full bg-red-500 size-8 items-center justify-center"
-              }
-            >
-              <AntDesign name="minus" size={20} color="black" />
-            </TouchableOpacity>
-            <Text className={"text-2xl"}>{countValue}</Text>
-            <TouchableOpacity
-              onPress={() => setCountValue(Math.min(9, countValue + 1))}
-              className={
-                "rounded-full bg-red-500 size-8 items-center justify-center"
-              }
-            >
-              <AntDesign name="plus" size={20} color="black" />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            className={"p-2 bg-red-500 rounded-def flex-row items-center"}
-            onPress={() =>
-              dispatch(addToCart({ id: data!.id, count: countValue }))
-            }
-          >
-            <Text className={"text-xl text-center"}>Add to cart</Text>
-          </TouchableOpacity>
-        </>
-      )}
+      <View className={"flex-row items-center gap-4"}>
+        <TouchableOpacity
+          onPress={() => setCountValue(Math.max(1, countValue - 1))}
+          disabled={alreadyInCart}
+          className={`rounded-full size-8 items-center justify-center ${activeStateStyle}`}
+        >
+          <AntDesign name="minus" size={20} color="black" />
+        </TouchableOpacity>
+        <Text className={`text-2xl ${alreadyInCart ? "opacity-50" : ""}`}>
+          {countValue}
+        </Text>
+        <TouchableOpacity
+          onPress={() => setCountValue(Math.min(9, countValue + 1))}
+          disabled={alreadyInCart}
+          className={`rounded-full size-8 items-center justify-center ${activeStateStyle}`}
+        >
+          <AntDesign name="plus" size={20} color="black" />
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity
+        className={`p-2 rounded-def flex-row items-center ${activeStateStyle}`}
+        disabled={alreadyInCart}
+        onPress={() => {
+          prefetchProduct({ id: String(data!.id) });
+          dispatch(addToCart({ id: data!.id, count: countValue }));
+        }}
+      >
+        <Text className={"text-xl text-center"}>Add to cart</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 export const AddToCart = ({ data }: { data: Tables<"products"> }) => {
-  const [countValue, setCountValue] = useState(1);
+  const cart = useAppSelector((state) => state.cart.products);
+  const [countValue, setCountValue] = useState(cart[data.id] || 1);
 
   return (
     <Card containerStyle={{ marginHorizontal: 8 }}>

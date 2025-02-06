@@ -62,6 +62,20 @@ const LicensePage = () => {
       >
         <StyledText>Credit-card icons created by Freepik - Flaticon</StyledText>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL("https://www.flaticon.com/free-icons/home")
+        }
+      >
+        <StyledText>Home icons created by Vectors Market - Flaticon</StyledText>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL("https://www.flaticon.com/free-icons/right-arrow")
+        }
+      >
+        <StyledText>Right arrow icons created by alfanz - Flaticon</StyledText>
+      </TouchableOpacity>
     </View>
   );
 };
